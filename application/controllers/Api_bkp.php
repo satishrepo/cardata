@@ -65,12 +65,12 @@ class Api extends CI_Controller {
       if(!empty($data)) {
 
         // $response .= "<div class='row1' >";
-        $response .= "<div class='related-content flex-cls flex-content' >";
+        $response .= "<div class='row color-row' >";
         forEach($data as $key => $value) {
 
-          $response .= "<div class='related-content-list'>
-            <div class='related-content-img'><img src='$value->image' class='resp-img img-responsive' alt='$value->title' id='$value->id'></div>
-            <div class='related-content-title'><h4 class='text-center'>$value->title</h4></div>
+          $response .= "<div class='col-sm-6'>
+            <div class='text-center'>$value->title</div>
+            <img src='$value->image' class='resp-img img-responsive' alt='$value->title' id='$value->id'>
             </div>";
         }
         $response .= "</div>";
@@ -92,10 +92,10 @@ class Api extends CI_Controller {
 	    if(count($data)) {
           // $response .= "<div class='row1' >";
 	     	forEach($data as $key => $value) {
-	    		$response .= "<div class='service-content flex-cls flex-content' link='$value->url'>";
-	     		$response .= "<div class='service-title'><h4>$value->title</h4></div>";
-	     		$response .= "<div class='service-desc'>$value->blurb</div>";
-	     		$response .= "<div class='service-img'>
+	    		$response .= "<div class='row color-row' link='$value->url'>";
+	     		$response .= "<div class='col-lg-3 col-md-3 hidden-sm-down hidden-xs-down'><span class='align-middle'>$value->title</span></div>";
+	     		$response .= "<div class='col-lg-3 col-md-6 hidden-sm-down hidden-xs-down'><span class='align-middle'>$value->blurb</span></div>";
+	     		$response .= "<div class='col-lg-6 col-md-3 col-xs-12 col-sm-12'>
 	     			<img src='$value->image' class='resp-img img-responsive' alt='$value->title' id='$value->id'>
 		     			<div class='desc desc_$value->id'>
 	            	<p class='desc_content'>$value->title</p>

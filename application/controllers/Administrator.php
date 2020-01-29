@@ -700,7 +700,8 @@ public function update_password(){
 			}else{
 
 				$data =  array('upload_data' => $this->upload->data());
-				$fileName = $_FILES['userfile']['name'];
+				$fileName = str_replace(" ", "_", $_FILES['userfile']['name']);
+				//echo str_replace(" ", "_", $_FILES['userfile']['name'] );exit;
 			}
 			
 			$this->readCsv($config['upload_path'].'/'.$fileName);

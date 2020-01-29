@@ -116,4 +116,34 @@
 				return false;
 			}
 		}
+
+		public function change_password()
+		{
+			// Check login
+			if(!$this->session->userdata('login')) {
+				redirect('users');
+			}
+
+			$loggedUser = $this->session->userdata();
+			$data['title'] = 'Change password';
+
+			$this->form_validation->set_rules('old_password', 'Old Password', 'required');
+			$this->form_validation->set_rules('new_password', 'New Password Field', 'required');
+			$this->form_validation->set_rules('confirm_new_password', 'Confirm New Password', 'matches[new_password]');
+
+			if($this->form_validation->run() === FALSE){
+				$this->load->view('templates/header');
+				$this->load->view('users/change-password', $data);
+				$this->load->view('templates/footer');
+			}else{
+				$rs = $this->User_Model->change_password(
+					$loggedUser['user_id'], 
+					$this->input->post('old_password'), 
+					$this->input->post('new_password'));
+				$rs = !$rs ? 'Password Has been changed successfull.' : $rs;
+				$this->session->set_flashdata('success', $rs);
+				redirect('users/change-password');
+			}
+			
+		}
 	}

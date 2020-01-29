@@ -47,4 +47,27 @@
 				return false;
 			}
 		}
+
+		public function change_password($userId, $old_password, $new_password)
+		{
+			
+			$query = $this->db->get_where('users', 
+				array(
+					'id' => $userId, 'password' => md5($old_password)
+				));
+			
+			if($query->num_rows() > 0) {
+
+				$data = array( 'password' => md5($new_password));
+				$this->db->where('id', $userId);
+				if($this->db->update('users', $data)) {
+					return '';
+				} else {
+					return 'Something went wrong try again later.';
+				}
+				
+			} else {
+				return 'Invalid old password.';
+			}
+		}
 	}

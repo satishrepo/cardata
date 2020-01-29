@@ -7,6 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //user routes
 $route['users/register'] = 'users/register';
 $route['users/dashboard'] = 'users/dashboard';
+$route['users/change-password'] = 'users/change_password';
 
 $route['categories/delete/(:any)'] = 'category/delete/$1';
 $route['default_controller'] = 'pages/view';
