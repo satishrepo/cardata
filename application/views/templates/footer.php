@@ -1,6 +1,6 @@
    	</div>
-   	<script>
+ <!--   	<script>
         CKEDITOR.replace( 'editor1' );
-    </script>
+    </script> -->
   </body>
 </html>

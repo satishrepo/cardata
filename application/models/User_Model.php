@@ -16,6 +16,8 @@
 			//Validate
 			$this->db->where('email', $email);
 			$this->db->where('password', $encrypt_password);
+			$this->db->where('status', 1);
+			$this->db->where('role_id', 2);
 
 			$result = $this->db->get('users');
 			
@@ -69,5 +71,21 @@
 			} else {
 				return 'Invalid old password.';
 			}
+		}
+
+		public function get_cars($id = FALSE)
+		{ 
+			if($id === FALSE)
+			{
+				$this->db->order_by('id', 'DESC');
+				$this->db->limit(300, 0);
+				$query = $this->db->get('cars');
+				// echo $this->db->last_query();
+				return $query->result_array(); 
+			}
+
+			$this->db->where(array('id' => $id));
+			$query = $this->db->get('cars');
+			return $query->row_array();
 		}
 	}

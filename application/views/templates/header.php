@@ -1,20 +1,20 @@
 <html>
   <head>
-    <title>CI Blog</title>
+    <title>Cardata</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/style.css">
-    <script src="http://cdn.ckeditor.com/4.7.1/full/ckeditor.js"></script>
+    <!-- <script src="http://cdn.ckeditor.com/4.7.1/full/ckeditor.js"></script> -->
+    <script type="text/javascript" src="<?php echo base_url(); ?>admintemplate/bower_components/jquery/dist/jquery.min.js"></script>
   </head>
   <body>
   <nav class="navbar navbar-inverse">
   	<div class="container">
   		<div class="navbar-header">
-  		<a class="navbar-brand" href="<?php echo base_url(); ?>">CI Blogs</a>	
+  		<a class="navbar-brand" href="<?php echo base_url(); ?>">Cardata</a>	
   		</div>
   		<div id="navbar">
   		 <ul class="nav navbar-nav">
   		 	<li><a href="<?php echo base_url(); ?>">Home</a></li>
-  		 	<li><a href="<?php echo base_url(); ?>upload">Upload File</a></li>
   		 </ul>	
        <ul class="nav navbar-nav navbar-right">
          <?php if(!$this->session->userdata('login')): ?>
@@ -23,6 +23,7 @@
          <?php endif; ?>
          <?php if($this->session->userdata('login')): ?>
             <li><a href="<?php echo base_url(); ?>users/dashboard"><?php echo $this->session->userdata('username'); ?></a></li>
+            <li><a href="<?php echo base_url(); ?>users/import">Upload File</a></li>
             <li><a href="<?php echo base_url(); ?>users/change-password">Change Password</a></li>
             <li><a href="<?php echo base_url(); ?>users/logout">Logout</a></li>
          <?php endif; ?>

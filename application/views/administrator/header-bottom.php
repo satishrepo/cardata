@@ -15,7 +15,7 @@
                 </li>
                 <li>
                     <a class="main-search morphsearch-search" href="#">
-                        <i class="ti-user   "></i>
+                        <i class="ti-user"></i>
                     </a>
                 </li>
                 <li>
@@ -53,11 +53,32 @@
                 <li class="nav-item">
                     <a href="#!">
                         <i class="ti-layers"></i>
-                        <span>Cars</span>
+                        <span>Models</span>
                     </a>
                     <ul class="tree-1">
-                        <li><a href="<?php echo base_url(); ?>administrator/cars">Cars</a></li>
-                        <li><a href="<?php echo base_url(); ?>administrator/import">Import CSV</a></li>
+                        <li><a href="<?php echo base_url(); ?>administrator/models">View Models</a></li>
+                        <li><a href="<?php echo base_url(); ?>administrator/models/update/0">Add Model</a></li>
+                        <li><a href="<?php echo base_url(); ?>administrator/import">Import Models</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#!">
+                        <i class="ti-layers"></i>
+                        <span>Dealers</span>
+                    </a>
+                    <ul class="tree-2">
+                        <li><a href="<?php echo base_url(); ?>administrator/dealers">View Dealer</a></li>
+                        <li><a href="<?php echo base_url(); ?>administrator/dealers/update/0">Add Dealer</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#!">
+                        <i class="ti-layers"></i>
+                        <span>Category</span>
+                    </a>
+                    <ul class="tree-2">
+                        <li><a href="<?php echo base_url(); ?>administrator/category">View Category</a></li>
+                        <li><a href="<?php echo base_url(); ?>administrator/category/update/0">Add Category</a></li>
                     </ul>
                 </li>
                 <!-- <li class="nav-item">
@@ -76,102 +97,6 @@
                     </ul>
 
                 </li> 
-                <li class="nav-item">
-                    <a href="#!">
-                        <i class="ti-pencil-alt"></i>
-                        <span>Products</span>
-                    </a>
-                    <ul class="tree-1">
-                       
-                        <li class="nav-sub-item"><a href="#">Category</a>
-                            <ul class="tree-2">
-                                <li><a href="<?php //echo base_url(); ?>administrator/product-categories/create">Add Category</a></li>
-                                <li><a href="<?php //echo base_url(); ?>administrator/product-categories">List Category</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-sub-item"><a href="#">Products</a>
-                            <ul class="tree-2">
-                                <li><a href="<?php //echo base_url(); ?>administrator/products/create">Add Products</a></li>
-                                <li><a href="<?php //echo base_url(); ?>administrator/products">List Products</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-
-                    <li class="nav-item">
-                        <a href="#!">
-                            <i class="ti-write"></i>
-                            <span>FAQ</span>
-                        </a>
-                        <ul class="tree-1">
-                            <li class="nav-sub-item"><a href="#">FAQ Category</a>
-                                <ul class="tree-2">
-                                    <li><a href="<?php //echo base_url(); ?>administrator/faq-categories/create">Add FAQ Category</a></li>
-                                    <li><a href="<?php //echo base_url(); ?>administrator/faq-categories">List FAQ Category </a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-sub-item"><a href="#">FAQ</a>
-                                <ul class="tree-2">
-                                    <li><a href="<?php //echo base_url(); ?>administrator/faq/create">Add FAQ</a></li>
-                                    <li><a href="<?php //echo base_url(); ?>administrator/faq">List FAQ</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-
-                
-                    <li class="nav-item">
-                        <a href="#!">
-                            <i class="ti-settings"></i>
-                            <span>Site Configuration</span>
-                        </a>
-                        <ul class="tree-1">
-                            <li><a href="<?php //echo base_url(); ?>administrator/site-configuration/update/1">Site Configuration</a></li>
-                            <li><a href="<?php //echo base_url(); ?>administrator/scopages">SCO</a></li>
-                            <li> <a href="<?php //echo base_url(); ?>administrator/sociallinks">Social Links</a></li>
-                            <li> <a href="<?php //echo base_url(); ?>administrator/page-contents">Page Contents</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#!">
-                            <i class="ti-layout-slider"></i>
-                            <span data-i18n="nav.basic-components.main">Sliders</span>
-                        </a>
-                        <ul class="tree-1">
-                            <li><a href="<?php //echo base_url(); ?>administrator/sliders/create" data-i18n="nav.basic-components.alert">Add slider</a></li>
-                            <li><a href="<?php //echo base_url(); ?>administrator/sliders" data-i18n="nav.basic-components.breadcrumbs">List slider</a></li>
-                        </ul>
-                    </li>
-                     <li class="nav-item">
-                        <a href="#!">
-                            <i class="ti-layout-slider"></i>
-                            <span data-i18n="nav.basic-components.main">Gallery</span>
-                        </a>
-                        <ul class="tree-1">
-                            <li><a href="<?php //echo base_url(); ?>administrator/galleries/add" data-i18n="nav.basic-components.alert">Add Gallery</a></li>
-                            <li><a href="<?php //echo base_url(); ?>administrator/galleries" data-i18n="nav.basic-components.breadcrumbs">List Gallery</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#!">
-                            <i class="ti-layout-grid2-thumb"></i>
-                            <span data-i18n="nav.basic-components.main">Teams</span>
-                        </a>
-                        <ul class="tree-1">
-                            <li><a href="<?php //echo base_url(); ?>administrator/team/add" data-i18n="nav.basic-components.alert">Add Team</a></li>
-                            <li><a href="<?php //echo base_url(); ?>administrator/team/list" data-i18n="nav.basic-components.breadcrumbs">List Teams</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#!">
-                            <i class="ti-direction-alt"></i>
-                            <span data-i18n="nav.basic-components.main">Testimonials</span>
-                        </a>
-                        <ul class="tree-1" style="display: none;">
-                            <li><a href="<?php //echo base_url(); ?>administrator/testimonials/add" data-i18n="nav.basic-components.alert">Add Testimonial</a></li>
-                            <li><a href="<?php //echo base_url(); ?>administrator/testimonials/list" data-i18n="nav.basic-components.breadcrumbs">List Testimonials</a></li>
-                        </ul>
-                    </li>
                     -->
             </ul>
         </div>

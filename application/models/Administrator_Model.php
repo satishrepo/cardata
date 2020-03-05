@@ -20,30 +20,6 @@
 			}
 		}
 
-		public function get_posts($slug = FALSE)
-		{
-			if($slug === FALSE){
-				$query = $this->db->order_by('id', 'DESC');
-				$query = $this->db->get('posts');
-				return $query->result_array(); 
-			}
-
-			$query = $this->db->get_where('posts', array('slug' => $slug));
-			return $query->row_array();
-		}
-
-		public function create_post()
-		{
-			$slug = url_title($this->input->post('title'), "dash", TRUE);
-
-			$data = array(
-				'title' => $this->input->post('title'), 
-			    'slug' => $slug,
-			    'body' => $this->input->post('body'),
-			    'category_id' => $this->input->post('category_id')
-			    );
-			return $this->db->insert('posts', $data);
-		}
 
 		public function delete($id,$table)
 		{
@@ -67,14 +43,6 @@
 							'status' => '1',
 							'password' => $password,
 							'register_date' => date("Y-m-d H:i:s")
-							// 'dob' => $this->input->post('dob'),
-							// 'image' => $post_image,
-							// 'username' => $this->input->post('username'),
-							// 'zipcode' => $this->input->post('zipcode'),
-							// 'contact' => $this->input->post('contact'),
-							// 'address' => $this->input->post('address'),
-							// 'gender' => $this->input->post('gender'),
-
 						  );
 			return $this->db->insert('users', $data);
 		}
@@ -141,225 +109,7 @@
 			$d = $this->db->update('users', $data);
 		}
 
-		public function create_product_category()
-		{
-			$data = array(
-				'name' => $this->input->post('name'),
-				'type' => 'product',
-				'status' => $this->input->post('status'),
-				'user_id' => $this->session->userdata('user_id')
-			    );
-			return $this->db->insert('categories', $data);
-		}
 
-		public function product_categories(){
-			$this->db->order_by('id','desc');
-			$this->db->where('type', 'product');
-			$query = $this->db->get('categories');
-			return $query->result_array();
-		}
-
-		public function update_product_category_data()
-		{
-			$data = array('name' => $this->input->post('name'),
-							'status' => $this->input->post('status')
-						  );
-
-			$this->db->where('id', $this->input->post('id'));
-			return $this->db->update('categories', $data);
-		}
-
-		public function update_product_category($id = FALSE)
-		  {
-		   if($id === FALSE){
-		    $query = $this->db->get('categories');
-		    return $query->result_array(); 
-		   }
-
-		   $query = $this->db->get_where('categories', array('id' => $id));
-		   return $query->row_array();
-		  }
-
-
-		  public function create_product($post_image)
-		{
-			$data = array('name' => $this->input->post('name'), 
-							'sku' => $this->input->post('sku'),
-							'save_price' => $this->input->post('save_price'),
-							'price' => $this->input->post('price'),
-							'user_id' => $this->session->userdata('user_id'),
-							'quantity' => $this->input->post('quantity'),
-							'color' => $this->input->post('color'),
-							'tag' => $this->input->post('tag'),
-							'short_description' => $this->input->post('short_description'),
-							'cat_id' => $this->input->post('cat_id'),
-							'size' => $this->input->post('size'),
-							'status' => $this->input->post('status'),
-							'description' => $this->input->post('description'),
-							'meta_title' => $this->input->post('meta_title'),
-							'meta_desc' => $this->input->post('meta_desc'),
-							'meta_tag' => $this->input->post('meta_tag'),
-							'image' => $post_image,
-							'datetime' => date("Y-m-d H:i:s")
-						);
-			$this->db->insert('products', $data);
-			 return  $insert_id = $this->db->insert_id();
-		}
-
-		public function insertproductsmultipleImages($data = array()){
-       	 $insert = $this->db->insert_batch('product_images',$data);
-       	 return $insert?true:false;
-    	}
-
-		// Check Product SKU exists
-		public function check_sku_exists($sku){
-			$query = $this->db->get_where('products', array('sku' => $sku));
-
-			if(empty($query->row_array())){
-				return true;
-			}else{
-				return false;
-			}
-		}
-
-		public function get_products($id = FALSE)
-		{
-			if($id === FALSE){
-				$query = $this->db->get('products');
-				return $query->result_array(); 
-			}
-
-			$query = $this->db->get_where('products', array('id' => $id));
-			return $query->row_array();
-		}
-
-		public function update_products($id = FALSE)
-		{
-			if($id === FALSE){
-				$query = $this->db->get('products');
-				return $query->result_array(); 
-			}
-
-			$query = $this->db->get_where('products', array('id' => $id));
-			return $query->row_array();
-		}
-
-		public function product_images($productId = FALSE){
-			$this->db->order_by('id','desc');
-			$this->db->where('product_id', $productId);
-			$query = $this->db->get('product_images');
-			return $query->result_array();
-		}
-
-		public function update_products_data($post_image)
-		{
-			$data = array('name' => $this->input->post('name'), 
-							'save_price' => $this->input->post('save_price'),
-							'price' => $this->input->post('price'),
-							'user_id' => $this->session->userdata('user_id'),
-							'quantity' => $this->input->post('quantity'),
-							'color' => $this->input->post('color'),
-							'tag' => $this->input->post('tag'),
-							'short_description' => $this->input->post('short_description'),
-							'cat_id' => $this->input->post('cat_id'),
-							'size' => $this->input->post('size'),
-							'status' => $this->input->post('status'),
-							'description' => $this->input->post('description'),
-							'meta_title' => $this->input->post('meta_title'),
-							'meta_desc' => $this->input->post('meta_desc'),
-							'meta_tag' => $this->input->post('meta_tag'),
-							'image' => $post_image,
-							'datetime' => date("Y-m-d H:i:s")
-						);
-			$this->db->where('id', $this->input->post('id'));
-			return $this->db->update('products', $data);
-		}
-
-		public function create_faq_category()
-		{
-			$data = array(
-				'name' => $this->input->post('name'),
-				'type' => 'faq',
-				'status' => $this->input->post('status'),
-				'user_id' => $this->session->userdata('user_id')
-			    );
-			return $this->db->insert('categories', $data);
-		}
-
-		public function faq_categories(){
-			$this->db->order_by('id','desc');
-			$this->db->where('type', 'faq');
-			$query = $this->db->get('categories');
-			return $query->result_array();
-		}
-
-		public function update_faq_category_data()
-		{
-			$data = array('name' => $this->input->post('name'),
-							'status' => $this->input->post('status')
-						  );
-
-			$this->db->where('id', $this->input->post('id'));
-			return $this->db->update('categories', $data);
-		}
-
-		public function update_faq_category($id = FALSE)
-		 {
-		   	if($id === FALSE){
-		    $query = $this->db->get('categories');
-		    return $query->result_array(); 
-		}
-			$query = $this->db->get_where('categories', array('id' => $id));
-			return $query->row_array();
-		}
-
-
-		//faq models functions start
-
-		 public function create_faq()
-		{
-			$data = array('question' => $this->input->post('question'), 
-							'answer' => $this->input->post('answer'),
-							'faq_cat_id' => $this->input->post('faq_cat_id'),
-							'status' => 1,
-							'datetime' => date("Y-m-d H:i:s")
-						);
-			return $this->db->insert('faqs', $data);
-		}
-
-
-		public function get_faqs()
-		{
-			$this->db->select('categories.name catName, faqs.id as faqId,faqs.question,faqs.answer,faqs.datetime,faqs.status as faqStatus');
-			$this->db->from('faqs');
-			$this->db->join('categories', 'categories.id = faqs.faq_cat_id');
-				
-				$query=$this->db->get();
-				return $data=$query->result_array();
-		}
-
-		public function update_faqs($id = FALSE)
-		{
-			if($id === FALSE){
-				$query = $this->db->get('faqs');
-				return $query->result_array(); 
-			}
-
-			$query = $this->db->get_where('faqs', array('id' => $id));
-			return $query->row_array();
-		}
-
-		public function update_faq_data()
-		{
-			$data = array('question' => $this->input->post('question'), 
-							'answer' => $this->input->post('answer'),
-							'faq_cat_id' => $this->input->post('faq_cat_id'),
-							'status' => 1,
-							'datetime' => date("Y-m-d H:i:s")
-						);
-			$this->db->where('id', $this->input->post('id'));
-			return $this->db->update('faqs', $data);
-		}
 
 		//sco pages details start
 		public function get_scopages($id = FALSE)
@@ -737,7 +487,7 @@
 
 		// function start fron forget password
 
-		public function email_exists(){
+public function email_exists(){
     $email = $this->input->post('email');
     $query = $this->db->query("SELECT email, password FROM users WHERE email='$email'");    
     if($row = $query->row()){
@@ -746,19 +496,25 @@
         return FALSE;
     }
 }
-public function temp_reset_password($temp_pass){
-    $data =array(
-                'email' =>$this->input->post('email'),
-                'reset_pass'=>$temp_pass);
-                $email = $data['email'];
 
-    if($data){
-        $this->db->where('email', $email);
-        $this->db->update('users', $data);  
-        return TRUE;
-    }else{
-        return FALSE;
-    }
+public function set_temp_password($email, $temp_pass) {
+	$this->db->where('email', $email);
+	return $this->db->update('users', array('reset_pass' => $temp_pass));
+}
+
+public function temp_reset_password($temp_pass, $password){
+    $where = array(
+                'reset_pass' => $temp_pass
+            );
+
+    $data = array(
+    		'password' => md5($password),
+    		'reset_pass' => ''
+    	);
+    $this->db->where($where);
+    $this->db->update('users', $data);  
+    return TRUE;
+    
 
 }
 public function is_temp_pass_valid($temp_pass){
@@ -774,8 +530,10 @@ public function get_cars($id = FALSE)
 { 
 	if($id === FALSE)
 	{
-		$this->db->order_by('id', 'DESC');
+		$this->db->select('*, cars.id as id, dealers.name as dealer');
+		$this->db->order_by('cars.id', 'DESC');
 		$this->db->limit(300, 0);
+		$this->db->join('dealers', 'cars.dealer = dealers.id', 'left');
 		$query = $this->db->get('cars');
 		// echo $this->db->last_query();
 		return $query->result_array(); 
@@ -788,9 +546,74 @@ public function get_cars($id = FALSE)
 
 public function update_car($carData)
 { 
-
-    $this->db->where('id', $carData['id']);
-    return $this->db->update('cars', $carData);
+	if($carData['id']) {
+		$this->db->where('id', $carData['id']);
+    	return $this->db->update('cars', $carData);
+	} else {
+    	return $this->db->insert('cars', $carData);
+	}
+    
 }
+
+public function update_dealers($carData)
+{ 
+	if($carData['id']) {
+		$this->db->where('id', $carData['id']);
+    	return $this->db->update('dealers', $carData);
+	} else {
+    	return $this->db->insert('dealers', $carData);
+	}
+    
+}
+
+
+public function getDropdown($table)
+{
+	$this->db->where(array('status' => 1));
+	$query = $this->db->get($table);
+	return $query->result_array();
+}
+
+public function get_dealers($id = FALSE)
+{ 
+	if($id === FALSE)
+	{
+		$this->db->order_by('id', 'DESC');
+		$this->db->limit(300, 0);
+		$query = $this->db->get('dealers');
+		return $query->result_array(); 
+	}
+
+	$this->db->where(array('id' => $id));
+	$query = $this->db->get('dealers');
+	return $query->row_array();
+}
+
+public function update_category($carData)
+{ 
+	if($carData['id']) {
+		$this->db->where('id', $carData['id']);
+    	return $this->db->update('category', $carData);
+	} else {
+    	return $this->db->insert('category', $carData);
+	}
+    
+}
+
+public function get_category($id = FALSE)
+{ 
+	if($id === FALSE)
+	{
+		$this->db->order_by('id', 'DESC');
+		$this->db->limit(300, 0);
+		$query = $this->db->get('category');
+		return $query->result_array(); 
+	}
+
+	$this->db->where(array('id' => $id));
+	$query = $this->db->get('category');
+	return $query->row_array();
+}
+
 
 }

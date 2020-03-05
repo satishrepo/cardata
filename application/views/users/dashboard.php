@@ -9,8 +9,8 @@
             <div class="card-block"> 
                 <section id="task-container">
                     <ul id="task-list">
-                        <li><a href="<?php echo base_url(); ?>posts/create">Create Post</a></li>
-           				 <li><a href="<?php echo base_url(); ?>categories/create">Create Category</a></li>
+                        <li><a href="<?php echo base_url(); ?>users/cars">View Cars</a></li>
+           				 <!-- <li><a href="<?php echo base_url(); ?>users/car">Add Car</a></li> -->
                     </ul>
                 </section>
             </div>

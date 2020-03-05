@@ -5,23 +5,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 //user routes
+$route['default_controller'] = 'pages/view';
+
 $route['users/register'] = 'users/register';
 $route['users/dashboard'] = 'users/dashboard';
 $route['users/change-password'] = 'users/change_password';
-
-$route['categories/delete/(:any)'] = 'category/delete/$1';
-$route['default_controller'] = 'pages/view';
-
-
+$route['users/import'] = 'users/uploadCsv';
+$route['users/cars'] = 'users/get_cars';
+$route['users/cars/update/(:any)'] = 'users/update_cars/$1';
+$route['users/forget-password'] = 'users/forget_password';
+$route['users/reset-password/(:any)'] = 'users/reset_password/$1';
 
 //admin routs
 $route['administrator'] = 'administrator/view';
 $route['administrator/cars'] = 'administrator/get_cars';
 $route['administrator/cars/update/(:any)'] = 'administrator/update_cars/$1';
+$route['administrator/models'] = 'administrator/get_cars';
+$route['administrator/models/update/(:any)'] = 'administrator/update_cars/$1';
+$route['administrator/dealers'] = 'administrator/get_dealers';
+$route['administrator/dealers/update/(:any)'] = 'administrator/update_dealers/$1';
+$route['administrator/category'] = 'administrator/get_category';
+$route['administrator/category/update/(:any)'] = 'administrator/update_category/$1';
+
 
 $route['administrator/import'] = 'administrator/uploadCsv';
 $route['administrator/readcsv'] = 'administrator/readcsv';
-
 
 
 $route['administrator/home'] = 'administrator/home';

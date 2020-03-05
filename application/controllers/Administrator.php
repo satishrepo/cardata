@@ -4,8 +4,8 @@
 
 		public function view($page = 'index'){
 			if($this->session->userdata('login')) {
-    			redirect('administrator/dashboard');
-   			}
+				redirect('administrator/models');
+			}
 
 			if (!file_exists(APPPATH.'views/administrator/'.$page.'.php')) {
 				show_404();
@@ -32,7 +32,7 @@
 
 		public function dashboard($page = 'dashboard'){
 		   if (!file_exists(APPPATH.'views/administrator/'.$page.'.php')) {
-		    show_404();
+			show_404();
 		   }
 		   $data['title'] = ucfirst($page);
 		   $this->load->view('administrator/header-script');
@@ -70,19 +70,19 @@
 					//Create Session
 					$user_data = array(
 								'user_id' => $user_id->id,
-				 				'username' => $user_id->username,
-				 				'email' => $user_id->email,
-				 				'login' => true,
-				 				'role' => $user_id->role_id,
-				 				'image' => $user_id->image,
-				 				'site_logo' => $sitelogo['logo_img']
-				 	);
+								'username' => $user_id->username,
+								'email' => $user_id->email,
+								'login' => true,
+								'role' => $user_id->role_id,
+								'image' => $user_id->image,
+								'site_logo' => $sitelogo['logo_img']
+					);
 
-				 	$this->session->set_userdata($user_data);
+					$this->session->set_userdata($user_data);
 
 					//Set Message
 					$this->session->set_flashdata('success', 'Welcome to administrator Dashboard.');
-					redirect('administrator/dashboard');
+					redirect('administrator/models');
 				}else{
 					$this->session->set_flashdata('danger', 'Login Credential in invalid!');
 					redirect('administrator/index');
@@ -122,7 +122,7 @@
 		public function add_user($page = 'add-user')
 		{
 			if (!file_exists(APPPATH.'views/administrator/'.$page.'.php')) {
-		    show_404();
+			show_404();
 		   }
 			// Check login
 			if(!$this->session->userdata('login')) {
@@ -141,10 +141,10 @@
 
 			if($this->form_validation->run() === FALSE){
 				 $this->load->view('administrator/header-script');
-		 	 	 $this->load->view('administrator/header');
-		  		 $this->load->view('administrator/header-bottom');
-		   		 $this->load->view('administrator/'.$page, $data);
-		  		 $this->load->view('administrator/footer');
+				 $this->load->view('administrator/header');
+				 $this->load->view('administrator/header-bottom');
+				 $this->load->view('administrator/'.$page, $data);
+				 $this->load->view('administrator/footer');
 			}else{
 				$password = md5($this->input->post('password'));
 				// $cpassword = md5($this->input->post('cpassword'));
@@ -208,11 +208,11 @@
 
 			$data['users'] = $this->Administrator_Model->get_users(FALSE, $config['per_page'], $offset);
 
-			 	$this->load->view('administrator/header-script');
-		 	 	 $this->load->view('administrator/header');
-		  		 $this->load->view('administrator/header-bottom');
-		   		 $this->load->view('administrator/users', $data);
-		  		$this->load->view('administrator/footer');
+				$this->load->view('administrator/header-script');
+				 $this->load->view('administrator/header');
+				 $this->load->view('administrator/header-bottom');
+				 $this->load->view('administrator/users', $data);
+				$this->load->view('administrator/footer');
 		}
 
 		public function delete($id)
@@ -250,16 +250,16 @@
 			$data['title'] = 'Update User';
 
 			$this->load->view('administrator/header-script');
-	 	 	 $this->load->view('administrator/header');
-	  		 $this->load->view('administrator/header-bottom');
-	   		 $this->load->view('administrator/update-user', $data);
-	  		$this->load->view('administrator/footer');
+			 $this->load->view('administrator/header');
+			 $this->load->view('administrator/header-bottom');
+			 $this->load->view('administrator/update-user', $data);
+			$this->load->view('administrator/footer');
 		}
 
 		public function update_user_data($page = 'update-user')
 		{
 			if (!file_exists(APPPATH.'views/administrator/'.$page.'.php')) {
-		    show_404();
+			show_404();
 		   }
 			// Check login
 			if(!$this->session->userdata('login')) {
@@ -274,10 +274,10 @@
 
 			if($this->form_validation->run() === FALSE){
 				 $this->load->view('administrator/header-script');
-		 	 	 $this->load->view('administrator/header');
-		  		 $this->load->view('administrator/header-bottom');
-		   		 $this->load->view('administrator/'.$page, $data);
-		  		 $this->load->view('administrator/footer');
+				 $this->load->view('administrator/header');
+				 $this->load->view('administrator/header-bottom');
+				 $this->load->view('administrator/'.$page, $data);
+				 $this->load->view('administrator/footer');
 			}else{
 				//Upload Image
 				
@@ -309,104 +309,22 @@
 		}
 
 
-	
-		//Site configuration
-		public function get_siteconfiguration($page = 'site-configuration')
-		{
-			if (!file_exists(APPPATH.'views/administrator/'.$page.'.php')) {
-		    	show_404();
-		   	}
-
-			$data['siteconfiguration'] = $this->Administrator_Model->get_siteconfiguration();
-
-			$data['title'] = 'Site Configuration';
-
-			$this->load->view('administrator/header-script');
-	 	 	$this->load->view('administrator/header');
-	  		$this->load->view('administrator/header-bottom');
-	   		$this->load->view('administrator/update-site-configuration', $data);
-	  		$this->load->view('administrator/footer');
-		}
-
-		public function update_siteconfiguration($id = NULL)
-		{
-			$data['siteconfiguration'] = $this->Administrator_Model->update_siteconfiguration($id);
-			$data['title'] = 'Update Configuration';
-
-			$this->load->view('administrator/header-script');
-	 	 	$this->load->view('administrator/header');
-	  		$this->load->view('administrator/header-bottom');
-	   		$this->load->view('administrator/update-site-configuration', $data);
-	  		$this->load->view('administrator/footer');
-		}
-
-
-		public function update_siteconfiguration_data($page = 'update-site-configuration')
-		{
-
-			if (!file_exists(APPPATH.'views/administrator/'.$page.'.php')) {
-		    show_404();
-		   }
-			// Check login
-			if(!$this->session->userdata('login')) {
-				redirect('administrator/index');
-			}
-			$data['title'] = 'Update Configuration';
-
-			$this->form_validation->set_rules('site_title', 'Site Title', 'required');
-			$this->form_validation->set_rules('site_name', 'Site Name', 'required');
-			
-			if($this->form_validation->run() === FALSE){
-				 $this->load->view('administrator/header-script');
-		 	 	 $this->load->view('administrator/header');
-		  		 $this->load->view('administrator/header-bottom');
-		   		 $this->load->view('administrator/'.$page, $data);
-		  		 $this->load->view('administrator/footer');
-			}else{
-
-				//Upload Image
-				$config['upload_path'] = './assets/images';
-				$config['allowed_types'] = 'gif|jpg|png|jpeg';
-				$config['max_size'] = '2048';
-				$config['max_width'] = '2000';
-				$config['max_height'] = '2000';
-
-				$this->load->library('upload', $config);
-
-				if(!$this->upload->do_upload()){
-					$errors =  array('error' => $this->upload->display_errors());
-					$data['logo_imgs'] = $this->Administrator_Model->update_siteconfiguration($this->input->post('id'));
-					$post_image = $data['logo_imgs']['logo_img'];
-				}else{
-					$data =  array('upload_data' => $this->upload->data());
-					$post_image = $_FILES['userfile']['name'];
-				}
-				
-				 $this->Administrator_Model->update_siteconfiguration_data($post_image);
-				//Set Message
-				$this->session->set_flashdata('success', 'site configuration Details has been Updated Successfull.');
-				redirect('administrator/site-configuration/update/1');
-			}
-		}
-
-
-
 		public function get_admin_data()
 		{
 			$data['changePassword'] = $this->Administrator_Model->get_admin_data();
 			$data['title'] = 'Change Password';
 
 			$this->load->view('administrator/header-script');
-	 	 	 $this->load->view('administrator/header');
-	  		 $this->load->view('administrator/header-bottom');
-	   		 $this->load->view('administrator/change-password', $data);
-	  		$this->load->view('administrator/footer');
+			 $this->load->view('administrator/header');
+			 $this->load->view('administrator/header-bottom');
+			 $this->load->view('administrator/change-password', $data);
+			$this->load->view('administrator/footer');
 		}
 
 		public function change_password($page = 'change-password')
 		{
 			if (!file_exists(APPPATH.'views/administrator/'.$page.'.php')) {
-		    show_404();
+			show_404();
 		   }
 			// Check login
 			if(!$this->session->userdata('login')) {
@@ -423,10 +341,10 @@
 
 			if($this->form_validation->run() === FALSE){
 				 $this->load->view('administrator/header-script');
-		 	 	 $this->load->view('administrator/header');
-		  		 $this->load->view('administrator/header-bottom');
-		   		 $this->load->view('administrator/'.$page, $data);
-		  		 $this->load->view('administrator/footer');
+				 $this->load->view('administrator/header');
+				 $this->load->view('administrator/header-bottom');
+				 $this->load->view('administrator/'.$page, $data);
+				 $this->load->view('administrator/footer');
 			}else{
 
 
@@ -457,16 +375,16 @@
 			$data['title'] = 'Update Profile';
 
 			$this->load->view('administrator/header-script');
-	 	 	 $this->load->view('administrator/header');
-	  		 $this->load->view('administrator/header-bottom');
-	   		 $this->load->view('administrator/update-profile', $data);
-	  		$this->load->view('administrator/footer');
+			 $this->load->view('administrator/header');
+			 $this->load->view('administrator/header-bottom');
+			 $this->load->view('administrator/update-profile', $data);
+			$this->load->view('administrator/footer');
 		}
 
 		public function update_admin_profile_data($page = 'update-profile')
 		{
 			if (!file_exists(APPPATH.'views/administrator/'.$page.'.php')) {
-		    show_404();
+			show_404();
 		   }
 			// Check login
 			if(!$this->session->userdata('login')) {
@@ -481,10 +399,10 @@
 
 			if($this->form_validation->run() === FALSE){
 				 $this->load->view('administrator/header-script');
-		 	 	 $this->load->view('administrator/header');
-		  		 $this->load->view('administrator/header-bottom');
-		   		 $this->load->view('administrator/'.$page, $data);
-		  		 $this->load->view('administrator/footer');
+				 $this->load->view('administrator/header');
+				 $this->load->view('administrator/header-bottom');
+				 $this->load->view('administrator/'.$page, $data);
+				 $this->load->view('administrator/footer');
 			}else{
 				//Upload Image
 				
@@ -517,74 +435,96 @@
 
 
 		//forget password functions start
-		public function forget_password_mail(){
-		    $this->load->library('form_validation');
-		    $this->form_validation->set_rules('email', 'Email', 'required|trim|xss_clean|callback_validate_credentials');
+	public function forget_password_mail()
+	{
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('email', 'Email', 'required|trim|xss_clean|callback_validate_credentials');
 
-            //check if email is in the database
-        $this->load->model('Administrator_Model');
-        if($this->Administrator_Model->email_exists()){
-            //$them_pass is the varible to be sent to the user's email
-            $temp_pass = md5(uniqid());
-            //send email with #temp_pass as a link
-            // $this->load->library('email', array('mailtype'=>'html'));
-            // $this->email->from('admin1234567@gmail.com', "Site");
-            // $this->email->to($this->input->post('email'));
-            // $this->email->subject("Reset your Password");
+		$this->load->model('Administrator_Model');
 
-            $message = "<p>This email has been sent as a request to reset our password</p>";
-            $message .= "<p><a href='".base_url()."administrator/reset-password/$temp_pass'>Click here </a>if you want to reset your password,
-                        if not, then ignore</p>";
-            // $this->email->message($message);
+		if($this->Administrator_Model->email_exists())
+		{
+			$email = $this->input->post('email');
+			$temp_pass = md5(uniqid());
 
+			if($this->Administrator_Model->set_temp_password($email, $temp_pass)) 
+			{
+				
+				$message = "<p>This email has been sent as a request to reset our password</p>";
+				$message .= "<p><a href='".base_url()."administrator/reset-password/$temp_pass'>Click here </a>if you want to reset your password, if not, then ignore</p>";
+				
+				// sending email 
 
-            // sending email 
+				$mailData = [
+					'toEmail' => $this->input->post('email'),
+					'subject' => 'Reset your Password',
+					'message' => $message
+				];
+				
 
-			$mailData = [
-				'toEmail' => $this->input->post('email'),
-				'subject' => 'Reset your Password',
-				'message' => $message
-			];
-			
-
-            if($this->sendMail($mailData)){
-                $this->load->model('Administrator_Model');
-                if($this->Administrator_Model->temp_reset_password($temp_pass)){
-                    // echo "check your email for instructions, thank you";
-                    $this->session->set_flashdata('success', 'check your email for instructions, thank you');
+				if($this->sendMail($mailData)){
+					$this->load->model('Administrator_Model');
+					$this->session->set_flashdata('success', 'check your email for instructions.');
 					redirect('administrator/index');
+				}
+				else
+				{
+					echo "email could not be sent, please contact your administrator";
+				}
+			}
+			else 
+			{
+				echo "please try again later.";
+			}
 
-                }
-            }
-            else{
-                echo "email was not sent, please contact your administrator";
-            }
-
-        }else{
-            echo "your email is not in our database";
-        }
+		} 
+		else
+		{
+			$this->session->set_flashdata('message',"your email is not in our database");
+			redirect('administrator/forget-password');
+		}
 }
+
 public function reset_password($temp_pass){
-    $this->load->model('Administrator_Model');
-    if($this->Administrator_Model->is_temp_pass_valid($temp_pass)){
-
-        $this->load->view('administrator/reset-password');
-       //once the user clicks submit $temp_pass is gone so therefore I can't catch the new password and   //associated with the user...
-
-    }else{
-        echo "the key is not valid";    
-    }
+	
+	$this->load->model('Administrator_Model');
+	
+	$data['temp_pass'] = $temp_pass;
+	$this->load->view('administrator/reset-password', $data);
 
 }
-public function update_password(){
-    $this->load->library('form_validation');
-        $this->form_validation->set_rules('password', 'Password', 'required|trim');
-        $this->form_validation->set_rules('cpassword', 'Confirm Password', 'required|trim|matches[password]');
-            if($this->form_validation->run()){
-            echo "passwords match";
-            }else{
-            echo "passwords do not match";  
-            }
+public function update_password()
+{
+	$this->load->model('Administrator_Model');
+
+	$this->load->library('form_validation');
+	
+	$this->form_validation->set_rules('temp_pass', 'Key', 'required|trim');
+	$this->form_validation->set_rules('password', 'Password', 'required|trim');
+	$this->form_validation->set_rules('cpassword', 'Confirm Password', 'required|trim|matches[password]');
+
+	$temp_pass = $this->input->post('temp_pass');
+	$newpassword = $this->input->post('password');
+
+	if($this->form_validation->run())
+	{
+		
+		if(!$this->Administrator_Model->is_temp_pass_valid($temp_pass))
+		{
+			$this->session->set_flashdata('message', 'Invalid key passed');
+			redirect('administrator/reset-password/'.$temp_pass);
+		}
+		else 
+		{
+			$this->Administrator_Model->temp_reset_password($temp_pass, $newpassword);
+			redirect('administrator');
+		}
+	}
+	else
+	{ 	
+		$data['temp_pass'] = $temp_pass;
+		$this->load->view('administrator/reset-password', $data);
+	}
 }
 
 
@@ -603,14 +543,24 @@ public function update_password(){
 
 	public function update_cars($id)
 	{
-		if(!$id){
-			echo 'Invalid id';
-		} else  {
-			$data['carData'] = $this->Administrator_Model->get_cars($id);
-		}
+		
+		$data['carData'] = $this->Administrator_Model->get_cars($id);
 
+		$data['dealers'] = $this->Administrator_Model->getDropdown('dealers');
+		$data['category'] = $this->Administrator_Model->getDropdown('category');
+		
 		if(empty($data['carData'])){
-			echo 'invalid id';
+			$data['carData'] = array(
+				'id' => 0,
+				'title' => '',
+				'dealer' => '',
+				'category' => '',
+				'url' => '',
+				'date' => '',
+				'image' => '',
+				'blurb' => '',
+				'status' => 1,
+			);
 		} 
 		
 		// Check login
@@ -639,17 +589,20 @@ public function update_password(){
 			$update = array(
 				'id' => $this->input->post('id'),
 				'dealer' => $this->input->post('dealer'),
+				'category' => $this->input->post('category'),
 				'title' => $this->input->post('title'),
 				'url' => $this->input->post('url'),
 				'date' => $this->input->post('date'),
+				'image' => $this->input->post('image'),
 				'status' => $this->input->post('status'),
+				'blurb' => $this->input->post('blurb'),
 				'updated_by' => $loggedUser['user_id'],
 				'updated_on' => date("Y-m-d H:i:s")
 			);
 
 			if($this->Administrator_Model->update_car($update)) {
-				$this->session->set_flashdata('success', 'Car Updated Successfull.');
-				redirect('administrator/cars');	
+				$this->session->set_flashdata('success', 'Model Saved Successfully.');
+				redirect('administrator/models');	
 			} else {
 				$this->load->view('administrator/header-script');
 				$this->load->view('administrator/header');
@@ -666,11 +619,11 @@ public function update_password(){
 	function readCsv($path)
 	{
 		$loggedUser = $this->session->userdata;
-        $this->load->library('csvreader');
-        $result = $this->csvreader->parse_file($path, $loggedUser['user_id']);
-        $this->db->insert_batch('cars', $result). ' ON DUPLICATE KEY UPDATE duplicate=UPDATE';
-        // echo $this->db->last_query();
-        // print_r($result);  
+		$this->load->library('csvreader');
+		$result = $this->csvreader->parse_file($path, $loggedUser['user_id']);
+		$this->db->insert_batch('cars', $result). ' ON DUPLICATE KEY UPDATE duplicate=UPDATE';
+		// echo $this->db->last_query();
+		// print_r($result);  
 	}
 
 	function uploadCsv() 
@@ -707,7 +660,7 @@ public function update_password(){
 			$this->readCsv($config['upload_path'].'/'.$fileName);
 			
 			$this->session->set_flashdata('success', 'Data Updated Successfully.');
-			redirect('administrator/cars');
+			redirect('administrator/models');
 		}
 	}
 
@@ -722,7 +675,7 @@ public function update_password(){
 
 	function sendMail($mailData)
 	{
-	    $config = Array(
+		$config = Array(
 		  'protocol' => 'smtp',
 		  'smtp_host' => 'ssl://smtp.googlemail.com',
 		  'smtp_port' => 465,
@@ -733,21 +686,159 @@ public function update_password(){
 		  'wordwrap' => TRUE
 		);
 
-        $this->load->library('email', $config);
+		$this->load->library('email', $config);
 		$this->email->set_newline("\r\n");
 		$this->email->from('satish.purohit.3@gmail.com'); // change it to yours
 		$this->email->to($mailData['toEmail']);// change it to yours
 		$this->email->subject($mailData['subject']);
 		$this->email->message($mailData['message']);
 		if($this->email->send())
-	    {
+		{
 			return true;
 		}
-	    else
-	    {
-	     	show_error($this->email->print_debugger());
-	     	return false;
-	    }
+		else
+		{
+			show_error($this->email->print_debugger());
+			return false;
+		}
+
+	}
+
+	public function get_dealers() {
+
+		$data['products'] = $this->Administrator_Model->get_dealers();
+	
+		$data['title'] = 'List Dealers';
+
+		$this->load->view('administrator/header-script');
+		$this->load->view('administrator/header');
+		$this->load->view('administrator/header-bottom');
+		$this->load->view('administrator/dealers', $data);
+		$this->load->view('administrator/footer');
+	}
+
+
+	public function update_dealers($id)
+	{
+		
+		$data['carData'] = $this->Administrator_Model->get_dealers($id);
+
+		if(empty($data['carData'])){
+			$data['carData'] = array(
+				'id' => 0,
+				'name' => '',
+				'code' => '',
+				'status' => 1,
+			);
+		} 
+		
+		// Check login
+		if(!$this->session->userdata('login')) {
+			redirect('administrator/index');
+		}
+		$data['title'] = 'Update Dealer';
+
+		$loggedUser = $this->session->userdata;
+
+		$this->form_validation->set_rules('name', 'Dealer Name', 'required');
+		$this->form_validation->set_rules('code', 'Dealer Code', 'required');
+		
+		if($this->form_validation->run() === FALSE) {
+			$this->load->view('administrator/header-script');
+			$this->load->view('administrator/header');
+			$this->load->view('administrator/header-bottom');
+			$this->load->view('administrator/update-dealer', $data);
+			$this->load->view('administrator/footer');		
+			
+		}else{
+			$update = array(
+				'id' => $this->input->post('id'),
+				'name' => $this->input->post('name'),
+				'code' => $this->input->post('code'),
+				'status' => $this->input->post('status') ? 1 : 0
+			);
+			
+			if($this->Administrator_Model->update_dealers($update)) {
+				$this->session->set_flashdata('success', 'Dealer Saved Successfully.');
+				redirect('administrator/dealers');	
+			} else {
+				$this->load->view('administrator/header-script');
+				$this->load->view('administrator/header');
+				$this->load->view('administrator/header-bottom');
+				$this->load->view('administrator/update-dealer', $data);
+				$this->load->view('administrator/footer');		
+			}
+
+			
+		}
+
+	}
+
+
+	public function get_category() {
+
+		$data['products'] = $this->Administrator_Model->get_category();
+	
+		$data['title'] = 'List Category';
+
+		$this->load->view('administrator/header-script');
+		$this->load->view('administrator/header');
+		$this->load->view('administrator/header-bottom');
+		$this->load->view('administrator/category', $data);
+		$this->load->view('administrator/footer');
+	}
+
+
+	public function update_category($id)
+	{
+		
+		$data['carData'] = $this->Administrator_Model->get_category($id);
+
+		if(empty($data['carData'])){
+			$data['carData'] = array(
+				'id' => 0,
+				'name' => '',
+				'status' => 1,
+			);
+		} 
+		
+		// Check login
+		if(!$this->session->userdata('login')) {
+			redirect('administrator/index');
+		}
+		$data['title'] = 'Update Category';
+
+		$loggedUser = $this->session->userdata;
+
+		$this->form_validation->set_rules('name', 'Category Name', 'required');
+		
+		if($this->form_validation->run() === FALSE) {
+			$this->load->view('administrator/header-script');
+			$this->load->view('administrator/header');
+			$this->load->view('administrator/header-bottom');
+			$this->load->view('administrator/update-category', $data);
+			$this->load->view('administrator/footer');		
+			
+		}else{
+			$update = array(
+				'id' => $this->input->post('id'),
+				'name' => $this->input->post('name'),
+				'status' => $this->input->post('status') ? 1 : 0
+			);
+			
+			if($this->Administrator_Model->update_category($update)) {
+				$this->session->set_flashdata('success', 'Category Saved Successfully.');
+				redirect('administrator/category');	
+			} else {
+				$this->load->view('administrator/header-script');
+				$this->load->view('administrator/header');
+				$this->load->view('administrator/header-bottom');
+				$this->load->view('administrator/update-category', $data);
+				$this->load->view('administrator/footer');		
+			}
+
+			
+		}
 
 	}
 

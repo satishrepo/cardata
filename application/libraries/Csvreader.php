@@ -39,6 +39,11 @@ class Csvreader {
                             if(strtolower($head[1]) == 'date') {
                                 $new_values[$j] = date('Y-m-d', strtotime($new_values[$j]));
                             }
+
+                            if(strtolower($head[1]) == 'dealer') {
+                                $new_values[$j] = $this->getDealer($new_values[$j]);
+                            }
+
                             $arr[strtolower($head[1])] = $new_values[$j];
                             $arr['created_by'] = $created_by;
                         }
@@ -56,8 +61,29 @@ class Csvreader {
     function escape_string($data){
         $result =   array();
         foreach($data as $row){
-            $result[]   =   str_replace('"', '',$row);
+            $result[] = str_replace('"', '',$row);
         }
         return $result;
-    }   
+    }
+
+    function getDealer($dealerName) {
+        $CI = &get_instance();
+        $CI->db->where('name', $dealerName);
+        $rs = $CI->db->get('dealers');
+        echo $dealerName;
+        print_r($rs);
+        if(!$rs->num_rows()) {
+            $data = array(
+                'name' => $dealerName,
+                'code' => $dealerName,
+                'status' => 1
+            );
+            $CI->db->insert('dealers', $data);
+            return $CI->db->insert_id();
+        } else {
+            $row = $rs->row_array();
+            return $row['id'];
+        }
+        // return $query->row_array();
+    }
 }

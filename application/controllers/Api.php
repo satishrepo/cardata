@@ -15,8 +15,11 @@ class Api extends CI_Controller {
      	$this->load->database();
   }
 
-  public function getTotalCars() {
-  	$query = $this->db->get('cars');
+  public function getTotalCars($dealer) {
+    $this->db->select('cars.id');
+    $this->db->where(array('dealers.name' => $dealer));
+    $this->db->join('dealers', 'cars.dealer = dealers.id', 'left');
+    $query = $this->db->get('cars');
   	return $query->num_rows();
   }
        
@@ -34,6 +37,7 @@ class Api extends CI_Controller {
     $dealer = is_array($params) && isset($params['dealer']) ? trim($params['dealer']) : '';
 		$related = is_array($params) && isset($params['related']) ? $params['related'] : '';
 
+    $totalRecords = $this->getTotalCars($dealer);
 		$respFormat = array(
 	    	// 'page' => $page,
 	    	// 'pagesize' => $pageSize,
@@ -48,15 +52,36 @@ class Api extends CI_Controller {
 			exit;
 		}
 
-		$offset = $page < 2 ? 0 : $pageSize * ($page - 1);
-		$limit = $related ? 2 : 50;//$pageSize;
+		$offset = $page < 2 ? 0 : $page; // $pageSize * ($page - 1);
+		$limit = $related ? 2 : $pageSize;
 
-    $this->db->where(array('dealer' => $dealer, 'status' => '1'));
-    $this->db->order_by('id', $order);  
+    $this->db->select('cars.*, cars.id as id, dealers.name as dealer');
+    $this->db->where(array('dealers.name' => $dealer));
+    $this->db->order_by('cars.id', $order);
     $this->db->limit($limit, $offset);  
-    $data = $this->db->get("cars")->result();
+    $this->db->join('dealers', 'cars.dealer = dealers.id', 'left');
+    $query = $this->db->get('cars');
     // echo $this->db->last_query();exit;
+    $data = $query->result(); 
 
+    
+    // paging 
+
+    $this->load->helper('url');
+    $this->load->library("pagination");
+    $config = array();
+    $config["base_url"] = base_url() . "api";
+    $config["total_rows"] = $totalRecords;
+    $config["per_page"] = $limit;
+    $config["num_links"] = $totalRecords/$pageSize;
+    $config["uri_segment"] = 3;
+    $config['page_query_string'] = FALSE;
+
+    $this->pagination->initialize($config);
+    $links = $this->pagination->create_links();
+    // $links = str_replace("<strong>", "<a href='' data-ci-pagination-page='1'>", $links);
+    // $links = str_replace("</strong>", "</a>", $links);
+    
     if($related) {
       
       $response = "";
@@ -67,11 +92,10 @@ class Api extends CI_Controller {
         // $response .= "<div class='row1' >";
         $response .= "<div class='related-content flex-cls flex-content' >";
         forEach($data as $key => $value) {
-
           $response .= "<div class='related-content-list'>
-            <div class='related-content-img'><img src='$value->image' class='resp-img img-responsive' alt='$value->title' id='$value->id'></div>
-            <div class='related-content-title'><h4 class='text-center'>$value->title</h4></div>
-            </div>";
+            <div class='related-content-img'><a href='$value->url'><img src='$value->image' class='resp-img img-responsive' alt='$value->title' id='$value->id'></a></div>
+            <div class='related-content-title text-center'><h4>$value->title</h4><a class='learn-more-btn' href='$value->url'>Know More</a></div></div>";
+	     	$response .= "</div>";
         }
         $response .= "</div>";
       
@@ -90,26 +114,25 @@ class Api extends CI_Controller {
       $response = "";
 
 	    if(count($data)) {
-          // $response .= "<div class='row1' >";
+
 	     	forEach($data as $key => $value) {
 	    		$response .= "<div class='service-content flex-cls flex-content' link='$value->url'>";
-	     		$response .= "<div class='service-title'><h4>$value->title</h4></div>";
-	     		$response .= "<div class='service-desc'>$value->blurb</div>";
 	     		$response .= "<div class='service-img'>
 	     			<img src='$value->image' class='resp-img img-responsive' alt='$value->title' id='$value->id'>
-		     			<div class='desc desc_$value->id'>
-	            	<p class='desc_content'>$value->title</p>
-	        		</div>
-	     			</div>";
-	   			$response .= "</div>";
+		     			<div class='desc desc_$value->id'><p class='desc_content'>$value->title</p></div></div>";
+	     		$response .= "<div class='service-desc'><h4>$value->title</h4><p>$value->blurb</p></div>";
+	     		$response .= "<div class='service-link'><a class='learn-more-btn' href='$value->url'>Learn More</a></div>";
+	     		$response .= "</div>";
 	     	}
-        // $response .= "</div>";
+        $response .= "<div class='row' id='pages'>".$links."</div>";
+        
 	    } else {
 	    	$response .= "<div class='col'> No Record Found </div>";
 	    }
 
 	    $respFormat['data'] = $response;
 	    echo json_encode($respFormat); 
+      // echo $response;
     }
     
     

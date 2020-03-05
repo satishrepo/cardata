@@ -30,7 +30,7 @@
 
 <div class="page-header">
     <div class="page-header-title">
-        <h4>Models Listing</h4>
+        <h4>Category Listing</h4>
     </div>
     <div class="page-header-breadcrumb">
         <ul class="breadcrumb-title">
@@ -39,9 +39,9 @@
                     <i class="icofont icofont-home"></i>
                 </a>
             </li>
-            <li class="breadcrumb-item"><a href="#!">Models</a>
+            <li class="breadcrumb-item"><a href="#!">Category</a>
             </li>
-            <li class="breadcrumb-item"><a href="#!">List Models</a>
+            <li class="breadcrumb-item"><a href="#!">List Category</a>
             </li>
         </ul>
     </div>
@@ -58,47 +58,30 @@
                 <table id="dom-jqry" class="table table-striped table-bordered nowrap">
                     <thead>
                         <tr>
-                            <!-- <th>Id</th> -->
-                            <th>Service Title</th>
-                            <th>Service Dealer</th>
-                            <!-- <th>Service URL</th> -->
-                            <th>Service Date</th>
-                            <th>Service Image</th>
-                            <!-- <th>service Blurb</th> -->
+                            <th>Name</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php foreach($products as $post) : ?>
                     <tr>
-                        <!-- <td><?php //echo $post['id']; ?></td> -->
                         <td>
-                            <a href="<?php echo base_url(); ?>administrator/models/update/<?php echo $post['id']; ?>"><?php echo $post['title']; ?></a>
+                            <a href="<?php echo base_url(); ?>administrator/category/update/<?php echo $post['id']; ?>"><?php echo $post['name']; ?></a>
                         </td>
-                        <td><?php echo $post['dealer']; ?></td>
-                        <!-- <td><?php echo $post['url']; ?></td> -->
-                        <td><?php echo date("M d,Y", strtotime($post['date'])); ?></td>
-                        
-                        <td><img src="<?php echo $post['image']; ?>" height="50px"></td>
-                        <!-- <td><?php //echo $post['blurb']; ?></td> -->
                         <td>
                             <?php if($post['status'] == 1){ ?>
-                           <a class="label label-inverse-primary enable" href='<?php echo base_url(); ?>administrator/enable/<?php echo $post['id']; ?>?table=<?php echo base64_encode('cars'); ?>'>Enabled</a>
+                           <a class="label label-inverse-primary enable" href='<?php echo base_url(); ?>administrator/enable/<?php echo $post['id']; ?>?table=<?php echo base64_encode('category'); ?>'>Enabled</a>
                             <?php }else{ ?> 
-                            <a class="label label-inverse-warning desable" href='<?php echo base_url(); ?>administrator/desable/<?php echo $post['id']; ?>?table=<?php echo base64_encode('cars'); ?>'>Disabled</a>
+                            <a class="label label-inverse-warning desable" href='<?php echo base_url(); ?>administrator/desable/<?php echo $post['id']; ?>?table=<?php echo base64_encode('category'); ?>'>Disabled</a>
                             <?php } ?>
-                            <a class="label label-inverse-info" href='<?php echo base_url(); ?>administrator/models/update/<?php echo $post['id']; ?>'>Edit</a>
-                            <a class="label label-inverse-danger delete" href='<?php echo base_url(); ?>administrator/delete/<?php echo $post['id']; ?>?table=<?php echo base64_encode('cars'); ?>'>Delete</a>
+                            <a class="label label-inverse-info" href='<?php echo base_url(); ?>administrator/category/update/<?php echo $post['id']; ?>'>Edit</a>
+                            <a class="label label-inverse-danger delete" href='<?php echo base_url(); ?>administrator/delete/<?php echo $post['id']; ?>?table=<?php echo base64_encode('category'); ?>'>Delete</a>
                             
                         </td>
                     </tr>
                     <?php endforeach; ?>
 
-                    <!-- <div class="paginate-link">
-                        <?php //echo $this->pagination->create_links(); ?>
-                    </div>  -->
-
-                     </tbody>
+                    </tbody>
                 </table>
             </div>
         </div>
